@@ -1,0 +1,170 @@
+{
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "kw": {
+    "epochs": 30,
+    "batch_size": 256,
+    "lr": 0.002,
+    "hidden_size": 48,
+    "num_heads": 4,
+    "transformer_layers": 2,
+    "dim_feedforward": 128,
+    "dropout": 0.1,
+    "num_bands": 4,
+    "verbose": false
+  },
+  "cells": [
+    {
+      "tau_s": 2,
+      "tau_l": 4,
+      "model": "spectral_K1_tied",
+      "desc": "K=1, retention TIED across units (Prop. 1 setting)",
+      "accs": [
+        0.9824,
+        0.9744,
+        0.9856
+      ],
+      "acc_mean": 0.9808,
+      "acc_std": 0.005768882040742379,
+      "tau_median": [
+        7.002014636993408
+      ],
+      "params": 62324
+    },
+    {
+      "tau_s": 2,
+      "tau_l": 4,
+      "model": "spectral_K1",
+      "desc": "K=1, free per-unit gates (48 timescales)",
+      "accs": [
+        0.9936,
+        0.9936,
+        0.9904
+      ],
+      "acc_mean": 0.9925333333333333,
+      "acc_std": 0.0018475208614068554,
+      "tau_median": [
+        7.662380218505859
+      ],
+      "params": 62324
+    },
+    {
+      "tau_s": 2,
+      "tau_l": 4,
+      "model": "spectral_no_cross",
+      "desc": "K=4 tiled bands, no Phi",
+      "accs": [
+        0.9696,
+        0.9616,
+        0.9568
+      ],
+      "acc_mean": 0.9626666666666667,
+      "acc_std": 0.006466323014923825,
+      "tau_median": [
+        1.684269666671753,
+        4.745644569396973,
+        13.436674118041992,
+        38.052085876464844
+      ],
+      "params": 134324
+    },
+    {
+      "tau_s": 2,
+      "tau_l": 4,
+      "model": "spectral",
+      "desc": "K=4 tiled bands, with Phi",
+      "accs": [
+        0.9632,
+        0.96,
+        0.9616
+      ],
+      "acc_mean": 0.9616000000000001,
+      "acc_std": 0.0015999999999999903,
+      "tau_median": [
+        1.6856580972671509,
+        4.7427215576171875,
+        13.440388679504395,
+        38.048519134521484
+      ],
+      "params": 143588
+    },
+    {
+      "tau_s": 2,
+      "tau_l": 16,
+      "model": "spectral_K1_tied",
+      "desc": "K=1, retention TIED across units (Prop. 1 setting)",
+      "accs": [
+        0.9376,
+        0.9552,
+        0.96
+      ],
+      "acc_mean": 0.9509333333333334,
+      "acc_std": 0.011793783673331192,
+      "tau_median": [
+        7.445814609527588
+      ],
+      "params": 62324
+    },
+    {
+      "tau_s": 2,
+      "tau_l": 16,
+      "model": "spectral_K1",
+      "desc": "K=1, free per-unit gates (48 timescales)",
+      "accs": [
+        0.9536,
+        0.9616,
+        0.9552
+      ],
+      "acc_mean": 0.9568,
+      "acc_std": 0.00423320209770334,
+      "tau_median": [
+        8.307526588439941
+      ],
+      "params": 62324
+    },
+    {
+      "tau_s": 2,
+      "tau_l": 16,
+      "model": "spectral_no_cross",
+      "desc": "K=4 tiled bands, no Phi",
+      "accs": [
+        0.3776,
+        0.3584,
+        0.392
+      ],
+      "acc_mean": 0.37600000000000006,
+      "acc_std": 0.01685704600456439,
+      "tau_median": [
+        1.6871401071548462,
+        4.757504940032959,
+        13.43747615814209,
+        38.02737808227539
+      ],
+      "params": 134324
+    },
+    {
+      "tau_s": 2,
+      "tau_l": 16,
+      "model": "spectral",
+      "desc": "K=4 tiled bands, with Phi",
+      "accs": [
+        0.3712,
+        0.4016,
+        0.3264
+      ],
+      "acc_mean": 0.3664,
+      "acc_std": 0.03782908933611804,
+      "tau_median": [
+        1.688633680343628,
+        4.754356384277344,
+        13.438577651977539,
+        38.026729583740234
+      ],
+      "params": 143588
+    }
+  ],
+  "elapsed_min": 32.60195566813151
+}

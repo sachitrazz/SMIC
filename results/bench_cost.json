@@ -1,0 +1,57 @@
+{
+ "threads": 1,
+ "batch": 1,
+ "image": {
+  "cnn": {
+   "params": 332411,
+   "flops": 196418112,
+   "latency_ms_median": 3.5995500038552564,
+   "latency_ms_p90": 5.034609996801009
+  },
+  "cnn_tf": {
+   "params": 483515,
+   "flops": 201333312,
+   "latency_ms_median": 3.832800004602177,
+   "latency_ms_p90": 3.997539999545552
+  },
+  "lstm": {
+   "params": 405979,
+   "flops": 198775168,
+   "latency_ms_median": 3.9722000001347624,
+   "latency_ms_p90": 4.409070002293447
+  },
+  "stlat": {
+   "params": 640795,
+   "flops": 206639488,
+   "latency_ms_median": 9.437950004212325,
+   "latency_ms_p90": 14.025149996450637
+  }
+ },
+ "video": {
+  "cnn": {
+   "params": 338425,
+   "flops": 1571309760,
+   "latency_ms_median": 26.330899996537482,
+   "latency_ms_p90": 32.91203000117093
+  },
+  "cnn_tf": {
+   "params": 488761,
+   "flops": 1573718208,
+   "latency_ms_median": 25.32710000014049,
+   "latency_ms_p90": 32.21571000030963
+  },
+  "lstm": {
+   "params": 410009,
+   "flops": 1572483200,
+   "latency_ms_median": 24.320150001585716,
+   "latency_ms_p90": 31.054699997912394
+  },
+  "stlat": {
+   "params": 644825,
+   "flops": 1576382592,
+   "latency_ms_median": 26.70215000034659,
+   "latency_ms_p90": 33.26916999503737
+  }
+ },
+ "flops_note": "train-mode pass plus analytic nn.LSTM gate cost"
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "dataset": "isl",
+    "chance": 0.02857142857142857,
+    "rows": [
+      {
+        "threshold": 0.999,
+        "n_groups": 788,
+        "n_train": 701,
+        "n_val": 305,
+        "lookup_acc": 0.940983606557377,
+        "largest_group": 21,
+        "n_classes": 35
+      },
+      {
+        "threshold": 0.99,
+        "n_groups": 294,
+        "n_train": 731,
+        "n_val": 275,
+        "lookup_acc": 0.8254545454545454,
+        "largest_group": 26,
+        "n_classes": 35
+      },
+      {
+        "threshold": 0.98,
+        "n_groups": 216,
+        "n_train": 661,
+        "n_val": 345,
+        "lookup_acc": 0.7652173913043478,
+        "largest_group": 28,
+        "n_classes": 35
+      },
+      {
+        "threshold": 0.95,
+        "n_groups": 151,
+        "n_train": 667,
+        "n_val": 339,
+        "lookup_acc": 0.7079646017699115,
+        "largest_group": 43,
+        "n_classes": 35
+      },
+      {
+        "threshold": 0.92,
+        "n_groups": 129,
+        "n_train": 628,
+        "n_val": 349,
+        "lookup_acc": 0.37822349570200575,
+        "largest_group": 64,
+        "n_classes": 34
+      },
+      {
+        "threshold": 0.9,
+        "n_groups": 112,
+        "n_train": 599,
+        "n_val": 378,
+        "lookup_acc": 0.09259259259259259,
+        "largest_group": 69,
+        "n_classes": 34
+      }
+    ]
+  },
+  {
+    "dataset": "asl",
+    "chance": 0.041666666666666664,
+    "rows": [
+      {
+        "threshold": 0.999,
+        "n_groups": 419,
+        "n_train": 302,
+        "n_val": 117,
+        "lookup_acc": 0.7435897435897436,
+        "largest_group": 1,
+        "n_classes": 24
+      },
+      {
+        "threshold": 0.99,
+        "n_groups": 366,
+        "n_train": 300,
+        "n_val": 119,
+        "lookup_acc": 0.6470588235294118,
+        "largest_group": 2,
+        "n_classes": 24
+      },
+      {
+        "threshold": 0.98,
+        "n_groups": 350,
+        "n_train": 298,
+        "n_val": 121,
+        "lookup_acc": 0.6446280991735537,
+        "largest_group": 3,
+        "n_classes": 24
+      },
+      {
+        "threshold": 0.95,
+        "n_groups": 286,
+        "n_train": 302,
+        "n_val": 117,
+        "lookup_acc": 0.42735042735042733,
+        "largest_group": 5,
+        "n_classes": 24
+      },
+      {
+        "threshold": 0.92,
+        "n_groups": 268,
+        "n_train": 296,
+        "n_val": 123,
+        "lookup_acc": 0.4146341463414634,
+        "largest_group": 5,
+        "n_classes": 24
+      },
+      {
+        "threshold": 0.9,
+        "n_groups": 259,
+        "n_train": 289,
+        "n_val": 130,
+        "lookup_acc": 0.4,
+        "largest_group": 9,
+        "n_classes": 24
+      }
+    ]
+  }
+]

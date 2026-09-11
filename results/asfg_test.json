@@ -1,0 +1,69 @@
+{
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "conditions": [
+    {
+      "label": "needs both timescales",
+      "lags": {
+        "tau_s": 2,
+        "tau_l": 16
+      },
+      "arms": {
+        "spectral_K2": {
+          "desc": "softmax over 2 bands  == ASFG convex mixture",
+          "accs": [
+            0.6784,
+            0.6496,
+            0.8528
+          ],
+          "mean": 0.7269333333333332,
+          "std": 0.10995077686552895
+        },
+        "spectral_K2_gated": {
+          "desc": "sigmoid weights, not forced to sum to 1",
+          "accs": [
+            0.6592,
+            0.7136,
+            0.8544
+          ],
+          "mean": 0.7424,
+          "std": 0.10073648792766207
+        }
+      },
+      "delta": 0.01546666666666674
+    },
+    {
+      "label": "timescales close together",
+      "lags": {
+        "tau_s": 2,
+        "tau_l": 4
+      },
+      "arms": {
+        "spectral_K2": {
+          "desc": "softmax over 2 bands  == ASFG convex mixture",
+          "accs": [
+            0.9824,
+            0.984,
+            0.984
+          ],
+          "mean": 0.9834666666666667,
+          "std": 0.0009237604307033636
+        },
+        "spectral_K2_gated": {
+          "desc": "sigmoid weights, not forced to sum to 1",
+          "accs": [
+            0.9888,
+            0.9856,
+            0.992
+          ],
+          "mean": 0.9888,
+          "std": 0.0031999999999999806
+        }
+      },
+      "delta": 0.005333333333333301
+    }
+  ]
+}

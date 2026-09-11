@@ -1,0 +1,8 @@
+torch>=2.0
+numpy
+scipy
+scikit-learn
+opencv-python
+pillow
+mediapipe
+matplotlib

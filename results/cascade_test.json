@@ -1,0 +1,76 @@
+{
+ "synthetic": {
+  "dataset": "synthetic",
+  "seeds": [
+   42,
+   123,
+   456,
+   789,
+   1024
+  ],
+  "arms": {
+   "original_asfg": {
+    "desc": "referenced (shared W_x)",
+    "accs": [
+     0.2624,
+     0.288,
+     0.5072,
+     0.3008,
+     0.3776
+    ],
+    "mean": 0.34719999999999995,
+    "std": 0.09921290238673595,
+    "tau_overlap": 0.7674777030944824,
+    "eff_rank_frac": 0.1829902489980062,
+    "coherence": 0.912674629688263,
+    "params": 158052
+   },
+   "original_asfg_unshared": {
+    "desc": "separate W_x",
+    "accs": [
+     0.5536,
+     0.2976,
+     0.4368,
+     0.344,
+     0.464
+    ],
+    "mean": 0.4192,
+    "std": 0.10102197780681192,
+    "tau_overlap": 0.4290423095226288,
+    "eff_rank_frac": 0.16744979619979858,
+    "coherence": 0.7297065854072571,
+    "params": 160500
+   },
+   "original_asfg_cascade": {
+    "desc": "CASCADE (M reads C)",
+    "accs": [
+     0.2912,
+     0.5184,
+     0.2848,
+     0.2832,
+     0.2704
+    ],
+    "mean": 0.3296,
+    "std": 0.1058119085925587,
+    "tau_overlap": 0.36199417114257815,
+    "eff_rank_frac": 0.09197668631871542,
+    "coherence": 0.9240407109260559,
+    "params": 165108
+   }
+  },
+  "tests": [
+   {
+    "arm": "original_asfg_unshared",
+    "delta": 0.07200000000000006,
+    "p": 0.299967057898402,
+    "dz": 0.5320323569586652
+   },
+   {
+    "arm": "original_asfg_cascade",
+    "delta": -0.01759999999999995,
+    "p": 0.8268370103281649,
+    "dz": -0.10442384404941224
+   }
+  ]
+ }
+}

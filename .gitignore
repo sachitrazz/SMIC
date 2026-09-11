@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+out/
+prepared/
+data/
+*.pt
+*.npz
+figures/*.jpg
+figures/*.pdf
