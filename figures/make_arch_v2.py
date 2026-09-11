@@ -110,7 +110,7 @@ def smic(ax):
             color=GREEN, fontweight="bold")
     box(ax, .030, y + .045, .12, .105, "two views", "augment", fc="white",
         ec=GREEN, fs=8.0)
-    box(ax, .030, y - .055, .12, .085, "training\nsplit", fc="white", ec=GREEN,
+    box(ax, .030, y - .055, .12, .085, "unlabelled\nimages", fc="white", ec=GREEN,
         fs=8.0)
     box(ax, .175, y - .020, .12, .175, "NT-Xent", "contrastive", fc="white",
         ec=GREEN, fs=8.4)
@@ -139,16 +139,7 @@ def smic(ax):
             fontsize=7.6, color=RED, va="center", fontweight="bold",
             linespacing=1.6)
 
-    ax.text(.012, .275,
-            "Removing the recurrence (scan pipeline, $175$K vs $616$K params): "
-            "$+10.0$ pts, $p=0.0036$, $d_z=2.74$, $5/5$ seeds.\n"
-            "Contrastive initialisation: $0.618\\rightarrow0.671$, $+0.053$, "
-            "$p=0.0003$, $5/5$ seeds, on the corpus that passes the leakage audit.\n"
-            "Stage 1 uses no data beyond the training split: $10{,}304$ auxiliary "
-            "crops add nothing ($-0.011$, $p=0.54$).  A Transformer head over the "
-            "tokens was tested and does not help ($-0.006$ / $-0.035$, n.s.).",
-            fontsize=7.8, color=INK, va="top", linespacing=1.65)
-    ax.set_xlim(0, 1); ax.set_ylim(.10, .76); ax.axis("off")
+    ax.set_xlim(0, 1); ax.set_ylim(.36, .76); ax.axis("off")
 
 
 if __name__ == "__main__":
