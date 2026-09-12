@@ -84,8 +84,8 @@ def referenced(ax):
             "$0.183$ of available directions.\n"
             "Proposition 2: $\\{C_t\\equiv M_t,\\ \\alpha_t\\equiv 1/2\\}$ is a "
             "critical submanifold that gradient flow cannot leave.\n"
-            "Three repairs tested: band tiling $-59.0$ pts, cascade $-1.8$ "
-            "(n.s.), non-convex fusion $+1.5$ (n.s.).",
+            "Three repairs tested: separate projections $+7.6$ pts (n.s.), "
+            "band tiling $-59.0$ pts, cascade $-1.8$ (n.s.).",
             fontsize=7.8, color=INK, va="top", linespacing=1.65)
     ax.set_xlim(0, 1); ax.set_ylim(.10, .76); ax.axis("off")
 

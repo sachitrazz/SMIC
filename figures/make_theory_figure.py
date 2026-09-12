@@ -1,7 +1,7 @@
 """
 make_theory_figure.py -- Figure 3: everything the experiments established.
 
-Three panels, every number measured, including the failures:
+Four panels, every number measured, including the failures:
 
   (a) The collapse and the repair Proposition 2 prescribes.  Sharing the
       input projections gives high stream overlap; separating them roughly
@@ -9,7 +9,9 @@ Three panels, every number measured, including the failures:
   (b) The accuracy consequence, pooled over two independent runs, drawn
       with a confidence interval that crosses zero -- the direction is
       consistent, the effect is not established.
-  (c) Three alternative mechanisms, all tested and rejected.
+  (c) Three axes of intervention, all tested and rejected.
+  (d) The isolated-sign result: no configuration difference is resolvable
+      at the available data scale.
 
     python figures/make_theory_figure.py
 """
@@ -143,9 +145,52 @@ def panel_rejected(ax, ratio, cas):
                 color=ACCENT if v < -.01 else MUTED)
     ax.set_yticks(y); ax.set_yticklabels(labels, fontsize=7.4)
     ax.set_xlabel("accuracy change vs its own baseline", fontsize=9)
-    ax.set_title("(c) Three mechanisms, tested and rejected",
+    ax.set_title("(c) Three axes of intervention, tested and rejected",
                  fontsize=9.5, loc="left", fontweight="bold")
     ax.set_xlim(min(rows) * 1.35, max(max(rows), 0.05) * 2.4)
+    ax.tick_params(labelsize=8)
+
+
+# ---------------------------------------------------------------- (d)
+NICE = {"published (shared W_x + ASFG)": "published",
+        "  + separate W_x": "+ separate $W_x$",
+        "  + separate W_x + contrastive": "+ contrastive",
+        "proposed encoder + contrastive": "proposed encoder"}
+
+
+def panel_control(ax, ctl, ovf):
+    """The headline: removing the recurrence improves accuracy."""
+    if not ctl:
+        _empty(ax, "control_test.json not found"); return
+    A = ctl["arms"]
+    ks = ["original_asfg", "cnn", "cnn_tf"]
+    lab = ["STLAT\n(LSTM + dual mem)", "CNN only", "CNN + Transformer"]
+    mu = [A[k]["mean"] for k in ks]
+    sd = [A[k]["std"] for k in ks]
+    n = len(ctl["seeds"])
+    ci = [1.96 * x / np.sqrt(n) for x in sd]
+    col = [ACCENT, GOOD, GOOD]
+    x = np.arange(3)
+    ax.bar(x, mu, .55, color=col, yerr=ci, capsize=4,
+           error_kw=dict(lw=1.3, ecolor=INK))
+    for i, v in enumerate(mu):
+        ax.text(i, v + ci[i] + .012, "%.3f" % v, ha="center",
+                fontsize=8, fontweight="bold", color=col[i])
+    ax.set_xticks(x); ax.set_xticklabels(lab, fontsize=7.2)
+    ax.set_ylabel("ISL validation accuracy", fontsize=9)
+    ax.set_ylim(0, max(mu) * 1.62)
+    ax.set_title("(d) Removing the recurrence WINS",
+                 fontsize=9.5, loc="left", fontweight="bold")
+    t = {x["arm"]: x for x in ctl["tests"]}["cnn_tf"]
+    ax.text(.5, .965, "+%.1f pts   $p=%.4f$   $d_z=%.2f$   5/5 seeds"
+            % (100 * t["delta"], t["p"], t["dz"]),
+            transform=ax.transAxes, ha="center", fontsize=7.6,
+            color=GOOD, fontweight="bold")
+    if ovf:
+        ax.text(.5, .885, "STLAT train %.2f / val %.2f  (overfitting, not undertrained)"
+                % (ovf["original_asfg"]["train"], ovf["original_asfg"]["val"]),
+                transform=ax.transAxes, ha="center", fontsize=6.8,
+                color=MUTED, style="italic")
     ax.tick_params(labelsize=8)
 
 
@@ -153,6 +198,8 @@ def build():
     col = load("collapse_final.json")
     cas = load("cascade_test.json")
     ratio = load("ratio_synthetic.json")
+    ctl = load("control_test.json")
+    ovf = load("overfit_test.json")
 
     # The sign-data result now lives in the benchmark figures
     # (make_bench_figures.py); this figure keeps only the controlled task.
