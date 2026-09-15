@@ -1,7 +1,7 @@
 """
 spectral.py -- Band-constrained log-retention gating.
 
-Core operator of the Spectral Memory Filter Bank (SMFB).
+Core operator of the band-tiled memory, tested and rejected in the paper.
 
 A classical LSTM forget gate is f_t = sigmoid(a_t) in (0, 1), with an
 *effective timescale* tau_eff = -1 / ln f.  Two facts make that

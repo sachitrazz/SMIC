@@ -32,8 +32,10 @@ from model import build, count_parameters
 DEFAULT_SEEDS = [42, 123, 456, 789, 1024]
 
 ISL_ROOT = os.environ.get("ISL_ROOT", os.path.join("..", "data", "ISL"))
-CSL_TRAIN = os.path.join("..", "CSL_train-20260824T063333Z-1-001", "CSL_train")
-CSL_TEST = os.path.join("..", "CSL_test-20260824T063301Z-1-001", "CSL_test")
+CSL_TRAIN = os.environ.get(
+    "CSL_TRAIN", os.path.join("..", "CSL_train-20260824T063333Z-1-001", "CSL_train"))
+CSL_TEST = os.environ.get(
+    "CSL_TEST", os.path.join("..", "CSL_test-20260824T063301Z-1-001", "CSL_test"))
 
 
 def set_seed(s):
@@ -41,6 +43,12 @@ def set_seed(s):
     np.random.seed(s)
     torch.manual_seed(s)
     torch.cuda.manual_seed_all(s)
+    # Off by default, so the released code reproduces the paper's numbers
+    # exactly. Set SMIC_DETERMINISTIC=1 for bit-identical GPU runs; this is
+    # slower, and cuDNN may then pick different kernels than the published runs.
+    if os.environ.get("SMIC_DETERMINISTIC") == "1":
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
 
 
 def make_dataset(name, seq_len=8, img_size=32, synth_kw=None, augment=True):

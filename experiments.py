@@ -27,7 +27,6 @@ Usage
 """
 
 import argparse
-import itertools
 import json
 import os
 
@@ -64,7 +63,7 @@ COLLAPSE_MODELS = [
     ("original_asfg", "Referenced STLAT + ASFG"),
     ("spectral_free_gate", "K streams, free sigmoid gates (no certificate)"),
     ("spectral_shared_proj", "Band gates but shared W_x"),
-    ("spectral", "Proposed SMFB (certified disjoint bands)"),
+    ("spectral", "Band-tiled memory, certified disjoint bands (rejected)"),
 ]
 
 
@@ -97,7 +96,7 @@ def run_collapse(dataset, seeds, **kw):
 # ======================================================================
 
 ABLATION_MODELS = [
-    ("spectral", "Full SMFB (K=4)"),
+    ("spectral", "Band-tiled memory (K=4)"),
     ("spectral_no_cross", "- cross-band interaction Phi"),
     ("spectral_no_transformer", "- Transformer encoder"),
     ("spectral_free_gate", "- disjointness certificate (free gates)"),

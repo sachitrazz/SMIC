@@ -9,7 +9,6 @@ Writes into out/tables/:
 import json
 import os
 
-import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RESULTS = os.path.join(HERE, "..", "results")

@@ -23,7 +23,6 @@ import sys
 import time
 
 import experiments as ex
-import train as train_mod
 
 RESULTS = "results"
 SEEDS3 = [42, 123, 456]

@@ -65,6 +65,12 @@ def seed_all(s):
     import random
     random.seed(s); np.random.seed(s)
     torch.manual_seed(s); torch.cuda.manual_seed_all(s)
+    # Off by default, so the released code reproduces the paper's numbers
+    # exactly. Set SMIC_DETERMINISTIC=1 for bit-identical GPU runs; this is
+    # slower, and cuDNN may then pick different kernels than the published runs.
+    if os.environ.get("SMIC_DETERMINISTIC") == "1":
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
 
 
 # ----------------------------------------------------------------------

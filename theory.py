@@ -1,5 +1,5 @@
 """
-theory.py -- The three propositions behind the Spectral Memory Filter Bank,
+theory.py -- The three propositions of the paper's Appendix,
 with numerical verification.
 
 Running this file checks every quantitative claim made in the paper's
@@ -338,7 +338,7 @@ def gate_log_timescale_gradients(verbose=True):
 
 def main():
     print("=" * 72)
-    print("Numerical verification of the SMFB propositions")
+    print("Numerical verification of the Appendix propositions")
     print("=" * 72)
     results = [
         ("Prop 1 closed form", verify_prop1()),

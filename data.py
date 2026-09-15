@@ -1,5 +1,5 @@
 """
-data.py -- datasets for the Spectral Memory Filter Bank experiments.
+data.py -- datasets for the SMIC experiments.
 
 Three sources:
 

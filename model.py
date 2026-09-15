@@ -11,7 +11,7 @@ Two classes:
                     apples to apples and the collapse measurement is a
                     measurement of the *referenced* model, not a strawman.
 
-  SpectralSTLAT  -- the band-tiled variant, a negative result: a Spectral Memory Filter Bank
+  SpectralSTLAT  -- the band-tiled variant, a negative result: a band-tiled memory bank
                     followed by a Transformer encoder and a linear head,
                     with switches for every ablation the paper reports.
 """
@@ -246,7 +246,7 @@ class ReferencedSTLAT(nn.Module):
 # ======================================================================
 
 class SpectralSTLAT(nn.Module):
-    """Spectral Memory Filter Bank + Transformer encoder + linear head.
+    """Band-tiled memory bank + Transformer encoder + linear head.
 
     Ablation switches map one-to-one onto the paper's ablation table:
 

@@ -1,8 +1,16 @@
-torch>=2.0
-numpy
-scipy
-scikit-learn
-opencv-python
-pillow
-mediapipe
-matplotlib
+# Exact versions used for every result in the paper (Python 3.14.3).
+#
+# For the CUDA 12.6 build of PyTorch, install torch first:
+#   pip install torch==2.13.0 --index-url https://download.pytorch.org/whl/cu126
+# then the rest:
+#   pip install -r requirements.txt
+#
+# The CPU build is enough for the smoke tests and the controlled two-cue task.
+torch==2.13.0
+numpy==2.5.1
+scipy==1.18.1
+scikit-learn==1.9.0
+opencv-python==5.0.0
+pillow==12.3.0
+mediapipe==1.0.1
+matplotlib==3.11.1

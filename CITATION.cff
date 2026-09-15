@@ -1,0 +1,55 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper."
+title: "SMIC: code for Benchmark Retrievability and Symmetry-Induced Memory Collapse in Sign Language Recognition"
+type: software
+license: MIT
+repository-code: "https://github.com/sachitrazz/SMIC"
+authors:
+  - given-names: Viswanathan
+    family-names: P
+    affiliation: "School of Computer Science and Engineering, Vellore Institute of Technology"
+  - given-names: Sachit Raj
+    family-names: Chaudhary
+    affiliation: "School of Computer Science and Engineering, Vellore Institute of Technology"
+  - given-names: Saurya Pratap
+    family-names: Singh
+    affiliation: "School of Computer Science and Engineering, Vellore Institute of Technology"
+  - given-names: Sushma
+    family-names: Viswanathan
+    affiliation: "University of New South Wales"
+  - given-names: Manikrishneshwar
+    family-names: Sasidhar
+    affiliation: "School of Computer Science and Engineering, Vellore Institute of Technology"
+  - given-names: Shareef
+    family-names: Mekala
+    affiliation: "School of Computing, Robert Gordon University"
+  - given-names: Harapriya
+    family-names: Kar
+    affiliation: "School of Computer Science and Engineering, Vellore Institute of Technology"
+keywords:
+  - sign language recognition
+  - benchmark leakage
+  - near-duplicate detection
+  - recurrent neural networks
+  - contrastive learning
+preferred-citation:
+  type: article
+  title: "Benchmark Retrievability and Symmetry-Induced Memory Collapse in Sign Language Recognition"
+  journal: "Scientific Reports"
+  status: submitted
+  year: 2026
+  authors:
+    - given-names: Viswanathan
+      family-names: P
+    - given-names: Sachit Raj
+      family-names: Chaudhary
+    - given-names: Saurya Pratap
+      family-names: Singh
+    - given-names: Sushma
+      family-names: Viswanathan
+    - given-names: Manikrishneshwar
+      family-names: Sasidhar
+    - given-names: Shareef
+      family-names: Mekala
+    - given-names: Harapriya
+      family-names: Kar
