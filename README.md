@@ -1,5 +1,7 @@
 # SMIC
 
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sachitrazz/SMIC/blob/main/SMIC.ipynb)
+
 Code for *Benchmark Retrievability and Symmetry-Induced Memory Collapse in Sign
 Language Recognition*. SMIC is the recurrence-free model in the paper: a
 convolutional hand-crop encoder initialised by self-supervised contrastive
@@ -34,6 +36,10 @@ The corpora are not redistributed, so the test suite checks what can be checked
 without them: the Appendix propositions verify numerically, the referenced
 STLAT model builds and runs, seeding is reproducible, and the corpus paths are
 configurable.
+
+The quickest route is the Colab notebook `SMIC.ipynb`, which clones the repo,
+runs the tests and the proposition checks, and rebuilds the paper's figures
+from the committed results. Locally:
 
 ```
 python -m unittest discover -s tests -v
@@ -129,7 +135,7 @@ button reads `CITATION.cff`; the BibTeX entry is:
 ```bibtex
 @article{smic2026,
   title   = {Benchmark Retrievability and Symmetry-Induced Memory Collapse in Sign Language Recognition},
-  author  = {P, Viswanathan and Chaudhary, Sachit Raj and Singh, Saurya Pratap and Viswanathan, Sushma and Sasidhar, Manikrishneshwar and Mekala, Shareef and Kar, Harapriya},
+  author  = {Kar, Harapriya and Chaudhary, Sachit Raj and Singh, Saurya Pratap and Viswanathan, Sushma and P, Viswanathan},
   journal = {Scientific Reports},
   year    = {2026},
   note    = {Submitted}

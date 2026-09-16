@@ -5,8 +5,8 @@ type: software
 license: MIT
 repository-code: "https://github.com/sachitrazz/SMIC"
 authors:
-  - given-names: Viswanathan
-    family-names: P
+  - given-names: Harapriya
+    family-names: Kar
     affiliation: "School of Computer Science and Engineering, Vellore Institute of Technology"
   - given-names: Sachit Raj
     family-names: Chaudhary
@@ -17,15 +17,10 @@ authors:
   - given-names: Sushma
     family-names: Viswanathan
     affiliation: "University of New South Wales"
-  - given-names: Manikrishneshwar
-    family-names: Sasidhar
+  - given-names: Viswanathan
+    family-names: P
     affiliation: "School of Computer Science and Engineering, Vellore Institute of Technology"
-  - given-names: Shareef
-    family-names: Mekala
-    affiliation: "School of Computing, Robert Gordon University"
-  - given-names: Harapriya
-    family-names: Kar
-    affiliation: "School of Computer Science and Engineering, Vellore Institute of Technology"
+    email: pviswanathan@vit.ac.in
 keywords:
   - sign language recognition
   - benchmark leakage
@@ -39,17 +34,13 @@ preferred-citation:
   status: submitted
   year: 2026
   authors:
-    - given-names: Viswanathan
-      family-names: P
+    - given-names: Harapriya
+      family-names: Kar
     - given-names: Sachit Raj
       family-names: Chaudhary
     - given-names: Saurya Pratap
       family-names: Singh
     - given-names: Sushma
       family-names: Viswanathan
-    - given-names: Manikrishneshwar
-      family-names: Sasidhar
-    - given-names: Shareef
-      family-names: Mekala
-    - given-names: Harapriya
-      family-names: Kar
+    - given-names: Viswanathan
+      family-names: P
