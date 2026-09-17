@@ -1,17 +1,15 @@
 """
-nn_leak_test.py -- is the "clean" split actually clean?
+nn_leak_test.py -- can a split be answered by lookup?
 
-MD5 deduplication removes byte-identical files.  It does not remove NEAR
-duplicates: the same photograph re-saved at a different JPEG quality, or
-two consecutive frames of the same person holding the same pose.  Those
-are different files with the same content, and they defeat a random split
-just as thoroughly as exact copies do.
+MD5 deduplication removes byte-identical files.  It does not remove near
+duplicates: the same photograph re-saved at a different JPEG quality, or two
+consecutive frames of the same held pose.  Those are different files with the
+same content, and they defeat a random split as thoroughly as exact copies.
 
-The test is a trivial baseline.  For every validation image, find its
-nearest training image in raw pixel space and copy that image's label.
-No learning, no parameters.  If that scores near the accuracy of a trained
-network, the validation set is answerable by lookup and no model result
-computed on this split means anything.
+The test is a baseline with no learning and no parameters.  For every
+validation image, find its nearest training image in raw pixel space and copy
+that image's label.  If this scores close to a trained network, the network's
+accuracy on that split reflects retrieval rather than recognition.
 
     python nn_leak_test.py isl asl
 """
@@ -22,7 +20,7 @@ import sys
 
 import numpy as np
 
-PREP = os.path.join("..", "prepared")
+PREP = os.environ.get("SMIC_PREPARED", os.path.join("..", "prepared"))
 
 
 def run(name):

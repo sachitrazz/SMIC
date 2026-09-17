@@ -11,7 +11,7 @@ parameterisation a poor basis for multi-timescale memory:
      stream can silently drift into a pure integrator.
   2. Nothing prevents two nominally independent streams from settling on
      the *same* tau.  See Proposition 2 in theory.py: the symmetric
-     readout makes the collapsed configuration a critical point.
+     readout makes the collapsed configuration an invariant set.
 
 The band-constrained log-retention gate fixes both by construction.  For
 band k with edges [tau_lo_k, tau_hi_k]:
@@ -143,7 +143,7 @@ class SpectralMemoryFilterBank(nn.Module):
         # Without it, K=1 is not a single-timescale model at all: each of
         # the d units carries its own gate and can select any timescale in
         # the range independently, so a one-"band" layer already has d
-        # timescales.  This control exists to keep that distinction honest.
+        # timescales.  This control keeps the two effects separate.
         self.tied_gate = tied_gate
         # How band states are combined into the fused activation.
         #   "softmax" -- per-unit convex combination over bands.  This is the

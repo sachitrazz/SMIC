@@ -1,12 +1,13 @@
 """
-make_leakage_figure.py -- Figure 4: the benchmark, not the model.
+make_leakage_figure.py -- Figure 1: what the benchmark measures.
 
   (a) File count is not sample size.  Each dataset collapses from files to
       byte-unique images to independent near-duplicate groups.
   (b) One model, one schedule, three splits.  Accuracy tracks the split.
   (c) The lookup baseline: nearest neighbour in raw pixels, no learning.
       Where it matches the network, the network is doing lookup too.
-  (d) On the leakage-free split, does unlabelled CSL pretraining help?
+  (d) Optional panel, not used in the paper: CSL pretraining on the
+      group-disjoint split.
 
     python figures/make_leakage_figure.py
 """
@@ -175,14 +176,14 @@ def panel_pretrain(ax):
                         for n, _ in got], fontsize=7.6)
     ax.set_ylabel("validation accuracy", fontsize=9)
     ax.set_ylim(0, max(b + a) * 1.45)
-    ax.set_title("(d) 10,304 unlabelled CSL hands, on the honest split",
+    ax.set_title("(d) 10,304 unlabelled CSL hands, group-disjoint split",
                  fontsize=9.5, loc="left", fontweight="bold")
     ax.legend(fontsize=7.0, frameon=False, loc="upper right")
     ax.tick_params(labelsize=8)
 
 
 if __name__ == "__main__":
-    # the pretraining panel (d) is superseded by the benchmark (bench.py)
+    # the paper uses panels (a) to (c)
     fig, axes = plt.subplots(1, 3, figsize=(14.5, 3.9))
     panel_shrink(axes[0])
     panel_protocol(axes[1])

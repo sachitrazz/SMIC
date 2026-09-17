@@ -24,7 +24,7 @@ RES = os.path.join(HERE, "..", "results")
 TABLES = os.path.join(HERE, "..", "out", "tables")
 NL = r" \\"
 
-# (citation key, model, sequence model family, dataset, protocol note, reported)
+# (citation key, model, sequence model family, dataset, input, reported result)
 LIT = [
     (r"alishzade2025", "ConvLSTM vs.~Vanilla Transformer", "recurrent vs.~attention",
      "WLASL; AzSLD", "RGB video", r"Transformer $88.3\%$ (WLASL), $76.8\%$ (AzSLD) Top-1"),
@@ -41,67 +41,60 @@ LIT = [
      "LSA-64", "skeleton sequence", r"$96.04\%$ ($749{,}888$ parameters)"),
 ]
 
-NAMES = {'alishzade2025': 'Alishzade et~al.', 'kautsar2024': 'Kautsar et~al.', 'sandoval2023': 'Sandoval-Castaneda et~al.', 'velmathi2023': 'Velmathi \\& Goyal', 'jing2025': 'Jing et~al.', 'nguyen2025': 'Nguyen \\& Tran'}
-
 OURS = {"stlat": "STLAT (dual memory + ASFG)", "cnn_tf": "CNN + Transformer",
         "lstm": "CNN + LSTM", "proposed": "SMIC (CNN, contrastive init.)"}
+FAMILY = {"stlat": "recurrent, dual memory", "lstm": "recurrent",
+          "cnn_tf": "attention", "proposed": "none (pooled)"}
 DS = {"isl": "ISL-IEEE", "asl": "ASL-IEEE", "csl": "CSL, signer-disjoint"}
 
 
 def main():
     L = [
         r"\begin{table*}[!t]",
-        r"\caption{Positioning against published spatiotemporal sign "
-        r"recognition models. \emph{Literature-reported} rows quote the "
-        r"figure stated in the cited work, on its own dataset and protocol, "
-        r"and are not re-run here. \emph{Direct} rows are our own models on "
-        r"our partitions (Table~\ref{tab:bench}). Because datasets, protocols "
-        r"and input modalities differ, no row is statistically compared with "
-        r"any other across the two groups, and no superiority is claimed. What "
-        r"the literature rows share with this study is a within-paper "
-        r"comparison of sequence models (recurrent against convolutional or "
-        r"attention-based) over a common front end.}",
+        r"\caption{Positioning against published spatiotemporal sign recognition "
+        r"models. \emph{Literature-reported} rows quote the figure stated in the "
+        r"cited work, on its own dataset and protocol, and are not re-run here. "
+        r"\emph{Direct experimental} rows are our own models on our partitions "
+        r"(Table~\ref{tab:bench}), with every input a hand crop. Because datasets, "
+        r"protocols and input modalities differ, no row is statistically compared "
+        r"with any other across the two groups, and no superiority is claimed. What "
+        r"the literature rows share with this study is a within-paper comparison of "
+        r"sequence models (recurrent against convolutional or attention-based) over "
+        r"a common front end.}",
         r"\label{tab:literature}",
         r"\centering",
         r"\footnotesize",
         r"\resizebox{\textwidth}{!}{%",
-        r"\begin{tabular}{llllll}",
+        r"\begin{tabular}{llll}",
         r"\toprule",
-        r"Source & Model & Sequence model & Dataset & Input & Reported result" + NL,
+        r"Model & Sequence model & Dataset & Reported result" + NL,
         r"\midrule",
-        r"\multicolumn{6}{l}{\textit{Literature-reported}}" + NL,
+        r"\multicolumn{4}{l}{\textit{Literature-reported}}" + NL,
     ]
-    for key, model, fam, ds, inp, res in LIT:
-        L.append(r"%s\cite{%s} & %s & %s & %s & %s & %s%s" % (NAMES[key], key, model, fam, ds, inp, res, NL))
+    for key, model, fam, ds, _input, res in LIT:
+        L.append(r"%s~\cite{%s} & %s & %s & %s%s" % (model, key, fam, ds, res, NL))
     L.append(r"\midrule")
-    L.append(r"\multicolumn{6}{l}{\textit{Direct experimental (this study)}}" + NL)
-    any_ours = False
+    L.append(r"\multicolumn{4}{l}{\textit{Direct experimental (this study)}}" + NL)
     for ds in ("isl", "asl", "csl"):
         f = os.path.join(RES, "bench_%s.json" % ds)
         if not os.path.exists(f):
             continue
         d = json.load(open(f))
         for m in ("stlat", "lstm", "cnn_tf", "proposed"):
-            if m not in d["models"]:
-                continue
-            mu = d["models"][m]["mean"]
-            fam = {"stlat": "recurrent, dual memory", "lstm": "recurrent",
-                   "cnn_tf": "attention", "proposed": "none (pooled)"}[m]
-            L.append(r"This study & %s & %s & %s & hand crop & $%.1f\%%$ accuracy (lookup $%.1f\%%$)%s"
-                     % (OURS[m], fam, DS[ds], 100 * mu["acc"], 100 * d["lookup"], NL))
-            any_ours = True
+            if m in d["models"]:
+                L.append(r"%s & %s & %s & $%.1f\%%$ accuracy (lookup $%.1f\%%$)%s"
+                         % (OURS[m], FAMILY[m], DS[ds], 100 * d["models"][m]["mean"]["acc"],
+                            100 * d["lookup"], NL))
     one = os.path.join(RES, "csl_oneshot.json")
     if os.path.exists(one):
         o = json.load(open(one))
-        L.append(r"This study & SMIC trunk, nearest prototype & none (pooled) & "
-                 r"CSL, signer-disjoint & hand crop & $%.1f\%%$ accuracy (lookup $%.1f\%%$)%s"
+        L.append(r"SMIC trunk, nearest prototype & none (pooled) & CSL, signer-disjoint & "
+                 r"$%.1f\%%$ accuracy (lookup $%.1f\%%$)%s"
                  % (100 * o["contrastive"]["acc"], 100 * o["lookup"], NL))
-    if not any_ours:
-        L.append(r"\multicolumn{6}{l}{(pending)}" + NL)
     L += [r"\bottomrule", r"\end{tabular}}", r"\end{table*}", ""]
     os.makedirs(TABLES, exist_ok=True)
     open(os.path.join(TABLES, "literature.tex"), "w").write("\n".join(L))
-    print("wrote tables/literature.tex")
+    print("wrote out/tables/literature.tex")
 
 
 if __name__ == "__main__":

@@ -1,20 +1,18 @@
 """
-run_all.py -- the full experiment suite, sized to run end to end.
+run_all.py -- runs the experiment stages in order.
 
-Order matters: the synthetic studies come first because they are the ones
-that actually test the propositions, and they do not depend on the size of
-the sign language corpora available locally.
+The synthetic studies come first because they test the propositions and do
+not depend on the sign language corpora.
 
     python run_all.py                # everything
     python run_all.py ratio ksweep   # a subset
     python run_all.py audit          # split integrity only (numpy, seconds)
 
-The "audit" stage is different in kind from the rest: it trains nothing.
-It checks whether a split can be answered by lookup, counts how many
-independent photographs a corpus actually contains, and sweeps the
-near-duplicate threshold.  Run it before quoting any accuracy on a corpus
-you have not audited -- on ISL-IEEE it is the difference
-between 0.996 and a number that means something.
+The "audit" stage trains nothing.  It checks whether a split can be answered
+by lookup, counts how many independent photographs a corpus contains, and
+sweeps the near-duplicate threshold.  On a random image split of ISL-IEEE the
+lookup baseline alone scores 0.992 (results/nn_leak_test.json), so the audit
+should be run before any accuracy on a corpus is quoted.
 """
 
 import json

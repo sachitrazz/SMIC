@@ -132,8 +132,8 @@ def draw(ax):
             color=INK, fontweight="bold")
     ax.text(0.30, yb + 0.16,
             "so $\\{C_t\\!\\equiv\\!M_t,\\ \\alpha_t\\!\\equiv\\!\\frac{1}{2}\\}$ "
-            "is a critical set of the objective that gradient flow cannot leave, "
-            "and sharing $W_x$ starts training inside it.",
+            "is an invariant set of training, "
+            "and sharing $W_x$ biases training toward it.",
             fontsize=8.0, va="center", color=INK)
     ax.text(10.62, yb + 0.62,
             "measured\nstream overlap %.3f shared, %.3f separated\n"

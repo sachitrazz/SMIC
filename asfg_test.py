@@ -1,19 +1,18 @@
 """
-asfg_test.py -- the decisive test of the convex-fusion claim.
+asfg_test.py -- a direct test of the convex constraint in the fusion gate.
 
 At K=2 the spectral fusion rule reduces exactly to the ASFG readout of the
 referenced STLAT model:
 
     softmax over 2 bands   ==   alpha * tanh(C) + (1 - alpha) * tanh(M)
 
-so comparing "softmax" against "gated" at K=2 is a direct test of the
-referenced gate, not of a proxy for it.  The only difference between the two
-arms is whether the two mixing weights are forced to sum to one.
+so comparing "softmax" against "gated" at K=2 tests the referenced gate
+itself rather than a proxy for it.  The only difference between the two arms
+is whether the two mixing weights are forced to sum to one.
 
-If the convex constraint is what limits the gate, the non-convex arm should
-win by a wide margin on a task that needs both memories at once, and the
-two arms should be indistinguishable on a task that needs only one.  Both
-conditions are run.
+If the convex constraint limits the gate, the non-convex arm should do better
+on a task that needs both memories at once, and the two arms should match on
+a task that needs only one.  Both conditions are run.
 """
 
 import json

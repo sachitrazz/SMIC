@@ -1,35 +1,26 @@
 """
-pretrain_finetune.py -- does CSL pretraining rescue the small labelled sets?
+pretrain_finetune.py -- the encoder, augmentation and contrastive loss shared
+by the benchmark, plus a pretraining experiment on unlabelled CSL frames.
 
-Every experiment in this project has been limited by one fact: the labelled
-alphabet sets are tiny (ISL 1006 unique images, ASL 419), so the encoder is
-starved and no architectural change can show through the noise.
+bench.py uses HandEncoder, gpu_aug and seed_all from here, and nt_xent through
+pretrain_source_control.py, so these define the SMIC trunk and its
+pretraining objective.
 
-CSL supplies 10,304 unlabelled hand crops.  It cannot be used for
-classification -- 1098 of its 1197 signs have a single clip -- but it can
-train the encoder.  This script tests whether that helps.
+Run as a script, it tests whether contrastive pretraining on 10,304 unlabelled
+CSL hand crops helps the small labelled ISL-IEEE and ASL-IEEE sets (an
+additional experiment; the paper's SMIC pretrains on each corpus's own
+training split, see bench.py):
 
-Protocol
---------
-  Stage 1 (unlabelled): SimCLR-style contrastive pretraining on the CSL
-    crops.  Two augmented views of the same crop are positives; other
-    crops in the batch are negatives.  No labels are used at any point.
+  Stage 1 (unlabelled): SimCLR-style contrastive pretraining.  Two augmented
+    views of the same crop are positives; other crops in the batch are
+    negatives.  No labels are used.
   Stage 2 (labelled): fine-tune on the labelled split.
+  Baseline: identical encoder and fine-tuning from random initialisation.
 
-  Baseline: identical encoder, identical fine-tuning, random init.
-
-The comparison is paired: same seeds, same split, same schedule, so the
-only difference is whether the encoder saw CSL.
-
-Run it on the GROUP-DISJOINT splits (isl_grouped, asl_grouped).  On the
-plain random splits both arms sit at 0.996, because those splits are
-answerable by nearest-neighbour lookup and leave no headroom in which to
-measure anything; see nn_leak_test.py and regroup_split.py.
-
-Two accuracies are recorded.  The primary figure is the LAST epoch.  The
-best epoch over the run is also stored, but it is selected by looking at
-the validation set and then reported on that same set, which is
-optimistic; it is kept only for reference.
+The comparison is paired over seeds, splits and schedule.  Run it on the
+group-disjoint splits (isl_grouped, asl_grouped).  The final-epoch accuracy
+is the primary figure; the best-epoch value is stored for reference only,
+because it is selected on the validation set.
 
     python pretrain_finetune.py isl_grouped
     python pretrain_finetune.py asl_grouped
@@ -47,15 +38,14 @@ import torch.nn.functional as F
 from scipy import stats
 from torch.utils.data import DataLoader, TensorDataset
 
-PREP = os.path.join("..", "prepared")
+PREP = os.environ.get("SMIC_PREPARED", os.path.join("..", "prepared"))
 DEV = "cuda" if torch.cuda.is_available() else "cpu"
 if DEV == "cpu":
-    torch.set_num_threads(14)          # 16 physical cores on this machine
+    torch.set_num_threads(int(os.environ.get("SMIC_THREADS", min(14, os.cpu_count() or 1))))
 
-# The GPU became unavailable mid-project (driver permission error), so the
-# pipeline is sized for CPU: 64px inputs and a narrower trunk.  Both arms
-# use identical settings, so the comparison is unaffected -- only the
-# absolute numbers would rise with more compute.
+# Inputs are 64 px and the trunk is narrow so that every experiment runs on a
+# single laptop GPU, or on a CPU.  All models share these settings, so the
+# comparisons are unaffected; absolute accuracies would rise with more compute.
 RES = 64
 WIDTH = 24
 SEEDS = [42, 123, 456, 789, 1024]
@@ -178,9 +168,9 @@ def finetune(state, name, seed, epochs=40, bs=64, lr=1e-3):
                            lr=lr, weight_decay=1e-3)
     # Cosine decay to zero.  Under a constant learning rate several runs
     # reached 0.99 mid-training and then fell to 0.51 by the last epoch, so
-    # the final-epoch figure measured luck rather than the model.  Decaying
-    # makes the last epoch the converged one, which is what lets us report
-    # it instead of selecting an epoch on the validation set.
+    # the final-epoch value was unstable.  Decaying makes the last epoch the
+    # converged one, so it can be reported without selecting an epoch on the
+    # validation set.
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
     crit = nn.CrossEntropyLoss()
     acc = best = 0.0

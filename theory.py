@@ -80,9 +80,9 @@ L(sigma . w) = L(w) for all parameters w.  Hence:
 
   (a) the parameter space carries a Z_2 action under which the risk is
       invariant;
-  (b) the fixed-point set Fix(sigma) = {C == M, alpha == 1/2} is a
-      critical submanifold of the risk: for w in Fix(sigma), the gradient
-      component orthogonal to Fix(sigma) is odd under sigma and therefore
+  (b) the fixed-point set Fix(sigma) = {C == M, alpha == 1/2} is an
+      invariant submanifold: for w in Fix(sigma), the gradient
+      component transverse to Fix(sigma) is odd under sigma and therefore
       vanishes;
   (c) gradient flow initialised in Fix(sigma) remains in Fix(sigma) for
       all time.
@@ -317,7 +317,7 @@ def gate_log_timescale_gradients(verbose=True):
     For the band gate  : d ln tau / d a = ln(kappa) * s(a) (1 - s(a))
     For a sigmoid gate : d ln tau / d a = (1 - f) / (-ln f),  f = sigmoid(a)
 
-    This is reported honestly: the sigmoid gate is *not* badly conditioned
+    For completeness: the sigmoid gate is *not* badly conditioned
     in log-timescale space, so the band gate's advantage is the
     disjointness certificate and the bounded range, not the gradient.
     """

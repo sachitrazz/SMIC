@@ -40,8 +40,8 @@ import numpy as np
 
 import handcrop as hc
 
-NEW = os.path.join("..", "new")
-OUT = os.path.join("..", "prepared")
+NEW = os.environ.get("SMIC_DATA", os.path.join("..", "new"))
+OUT = os.environ.get("SMIC_PREPARED", os.path.join("..", "prepared"))
 IMG = 96
 T = 8                 # sign frames kept per clip
 POOL_PER_CLIP = 6     # frames per clip for the unlabelled pool

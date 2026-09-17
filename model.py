@@ -1,19 +1,20 @@
 """
-model.py -- STLAT-S (band-tiled memory) and a faithful reproduction of the
-referenced STLAT model.
+model.py -- the referenced STLAT model and the band-tiled variant.
 
 Two classes:
 
   ReferencedSTLAT  -- the referenced STLAT architecture as implemented,
                     including the shared input projections that
-                    Proposition 2 identifies as the collapse mechanism.
-                    Kept verbatim (modulo batching) so the comparison is
-                    apples to apples and the collapse measurement is a
-                    measurement of the *referenced* model, not a strawman.
+                    Proposition 2 identifies as the source of the symmetry.
+                    It follows the referenced implementation exactly, apart
+                    from batching, so that the collapse measurement is a
+                    measurement of that model.  wire_fix=True computes the
+                    equations as written instead (the corrected STLAT row).
 
-  SpectralSTLAT  -- the band-tiled variant, a negative result: a band-tiled memory bank
-                    followed by a Transformer encoder and a linear head,
-                    with switches for every ablation the paper reports.
+  SpectralSTLAT  -- the band-tiled variant, reported in the paper as a
+                    negative result: a band-tiled memory bank followed by a
+                    Transformer encoder and a linear head, with switches for
+                    each ablation.
 """
 
 import torch

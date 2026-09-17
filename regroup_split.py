@@ -1,19 +1,20 @@
 """
-regroup_split.py -- rebuild the splits so validation is not a lookup task.
+regroup_split.py -- group-disjoint splits, so validation is not a lookup task.
 
-Established by nn_leak_test.py: after MD5 deduplication the ISL validation
-set is still 99.2% answerable by nearest-neighbour lookup, because 77% of
-validation images have a near-identical twin in training.  dupgroups.py
-shows why -- the 1006 MD5-unique ISL images form only ~216 independent
-near-duplicate groups.
+nn_leak_test.py shows that after MD5 deduplication the ISL-IEEE validation set
+is still 99.2% answerable by nearest-neighbour lookup, because 77% of
+validation images have a near-identical twin in training.  dupgroups.py shows
+why: the 1006 MD5-unique ISL images form about 216 independent near-duplicate
+groups.
 
-Fix: split by GROUP, never by image.  Every near-duplicate group lands
-entirely in train or entirely in validation, so no validation image has a
-twin on the other side.  Classes with a single group are dropped, since
-such a class cannot appear on both sides of any honest split.
+The split is therefore made by group, never by image.  Every near-duplicate
+group lands entirely in training or entirely in validation, so no validation
+image has a twin on the other side.  A class with a single group cannot
+appear on both sides and would be dropped; in ISL-IEEE and ASL-IEEE every
+class keeps at least two groups.
 
-Writes {name}_grouped.npz alongside the originals; the originals are kept
-so the two protocols can be compared directly in the paper.
+Writes {name}_grouped.npz alongside the originals, which are kept so the two
+protocols can be compared.
 
     python regroup_split.py isl asl
 """
@@ -26,7 +27,7 @@ import numpy as np
 
 import dupgroups
 
-PREP = os.path.join("..", "prepared")
+PREP = os.environ.get("SMIC_PREPARED", os.path.join("..", "prepared"))
 TH = 0.98            # see dupgroups.py: the knee of the group-count curve
 VAL_FRAC = 0.30
 

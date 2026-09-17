@@ -1,31 +1,25 @@
 """
-prepare_new.py -- build clean, leakage-free, hand-cropped datasets.
+prepare_new.py -- deduplicated, hand-cropped arrays for ISL-IEEE and ASL-IEEE.
 
-Why this exists
----------------
-The supplied splits cannot be used as they stand.  Verified by MD5:
+The distributed train and test folders cannot be used as a split.  Verified by
+MD5:
 
   ISL_DATA_IEEE   175/175 test images are byte-identical to training images
   ASL_DATA_IEEE    99/ 99 unique test images likewise
   CSL            1302/1302 test clips are the same clips as train
 
-Training on _TRAIN and scoring on _TEST would report a memorisation score,
-not a generalisation score.  There are also duplicates *within* train
-(ASL: 720 files, 419 unique).
-
-This script therefore ignores the supplied split and builds its own:
+There are also duplicates within the training folders (ASL: 720 files, 419
+unique).  This script therefore ignores the supplied split:
 
   1. Deduplicate by content hash, keeping one copy of each image.
-  2. Split.  For ISL/ASL, a stratified image split.  For CSL, a
-     SIGNER-INDEPENDENT split -- persons 0000-0007 train, 0008-0009 test --
-     so no signer appears on both sides.  That is the protocol the paper
-     should have used: it measures generalisation to a new signer, which is
-     the deployment condition, and it cannot be gamed by memorising people.
-  3. Crop to the hand (handcrop.py), which is what the supervisor asked
-     for.  For clips the box is propagated across frames when the detector
-     misses, so motion-blurred frames are kept rather than silently
-     mis-cropped.
-  4. Cache to .npy so training does not re-decode 53k JPEGs every epoch.
+  2. Split.  ISL/ASL get a stratified image split here, which
+     regroup_split.py then replaces with the group-disjoint split used in
+     the paper.  The `csl` mode builds a signer-independent split
+     (persons 0000-0007 train, 0008-0009 test); the one-shot CSL task in the
+     paper is built by prepare_csl_signer.py instead.
+  3. Crop to the hand (handcrop.py).  For clips the box is propagated across
+     frames when the detector misses, so motion-blurred frames are kept.
+  4. Cache to .npz so training does not re-decode the images every epoch.
 
 Usage
 -----
@@ -47,8 +41,8 @@ import numpy as np
 
 import handcrop as hc
 
-NEW = os.path.join("..", "new")
-OUT = os.path.join("..", "prepared")
+NEW = os.environ.get("SMIC_DATA", os.path.join("..", "new"))
+OUT = os.environ.get("SMIC_PREPARED", os.path.join("..", "prepared"))
 IMG = 96
 CLIP_T = 12                       # frames sampled per CSL clip
 EXTS = (".jpg", ".jpeg", ".png", ".bmp")

@@ -10,7 +10,7 @@ Four studies:
   ablation   Component ablation with paired t-tests over shared seeds and
              Bonferroni correction.  Paired, because every configuration
              sees the identical seed set and data split -- which is what
-             makes the test legitimate.
+             makes the paired test valid.
 
   ksweep     Accuracy and coverage risk as a function of the number of
              bands K, testing the 1/K^2 law of Proposition 3.

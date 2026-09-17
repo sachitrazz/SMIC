@@ -17,7 +17,7 @@ import sys
 import cv2
 import numpy as np
 
-PREP = os.path.join("..", "prepared")
+PREP = os.environ.get("SMIC_PREPARED", os.path.join("..", "prepared"))
 
 
 def descriptors(X):

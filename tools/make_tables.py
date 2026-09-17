@@ -37,7 +37,7 @@ def pval(p):
 
 
 # ----------------------------------------------------------------------
-# Table 1 -- the collapse measurement (the headline)
+# Collapse measurement (Supplementary Table S2)
 # ----------------------------------------------------------------------
 
 COLLAPSE_ROWS = [
@@ -112,7 +112,7 @@ def texlabel(k):
 
 
 # ----------------------------------------------------------------------
-# Table 2 -- ISL, paired, and honestly non-significant
+# ISL-IEEE paired comparison (not significant)
 # ----------------------------------------------------------------------
 
 

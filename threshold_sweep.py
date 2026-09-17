@@ -26,7 +26,7 @@ import numpy as np
 
 import dupgroups
 
-PREP = os.path.join("..", "prepared")
+PREP = os.environ.get("SMIC_PREPARED", os.path.join("..", "prepared"))
 THRESHOLDS = [0.999, 0.99, 0.98, 0.95, 0.92, 0.90]
 VAL_FRAC = 0.30
 

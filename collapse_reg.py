@@ -1,41 +1,26 @@
 """
-collapse_reg.py -- a regulariser that actively repels the collapse critical set.
+collapse_reg.py -- a regulariser that penalises stream collapse.
 
-Motivation
-----------
-Proposition 2 establishes that {C == M, alpha == 1/2} is a critical
-submanifold of the training objective: the gradient component that would
-separate the two memory streams vanishes identically on it.
+Additional experiment; not used for any number reported in the paper.
 
-Separating the input projections moves the *initialisation* off that set,
-which is why it helps.  But the set itself is still there in the loss
-landscape, and nothing in the objective pushes away from it.  Whether
-training drifts back toward it is left to chance.
+Proposition 2 shows that {C == M, alpha == 1/2} is an invariant submanifold of
+training for the referenced STLAT readout.  Nothing in the ordinary objective
+pushes the two memory streams away from it.  This module adds a term that
+does, following the variance and covariance penalties used against the same
+failure mode in self-supervised learning (Barlow Twins, VICReg).
 
-The principled fix is a term that makes collapse explicitly costly.  This
-is a solved problem in self-supervised learning, where the identical
-failure mode -- two branches converging to the same constant -- is
-prevented by variance and covariance penalties (Barlow Twins, VICReg).
-That machinery has not, to our knowledge, been applied to the memory
-streams of a recurrent network, where Proposition 2 says the same
-degeneracy is not merely possible but structurally favoured.
-
-Three terms, each targeting a distinct failure
-----------------------------------------------
-1. VARIANCE.  Per-dimension standard deviation of each stream is pushed
-   above a floor.  This prevents *dimensional* collapse -- entire units
-   going constant -- which is what drives the effective rank down. It is
-   the term that directly targets the statistic we measured at 0.18.
-
-2. COVARIANCE.  Off-diagonal covariance within a stream is penalised, so
-   units inside one memory do not duplicate each other.
-
+Three terms
+-----------
+1. VARIANCE.  The per-dimension standard deviation of each stream is pushed
+   above a floor, which prevents whole units from becoming constant and so
+   targets the effective rank.
+2. COVARIANCE.  Off-diagonal covariance within a stream is penalised, so units
+   inside one memory do not duplicate each other.
 3. CROSS-STREAM.  Correlation between the two streams is penalised, which
-   is the collapse of Proposition 2 proper.
+   targets the collapse of Proposition 2 directly.
 
-Only (3) targets the theorem directly; (1) and (2) matter because a stream
-that has itself collapsed to a low-rank subspace cannot be decorrelated
-from anything in a meaningful way.
+Terms (1) and (2) are needed because a stream that has itself collapsed to a
+low-rank subspace cannot be decorrelated from anything in a meaningful way.
 
 Cost: no new parameters, one pass over the state tensor.
 """

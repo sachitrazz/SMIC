@@ -5,7 +5,8 @@ For each model in bench.py and each input type (a 64 px image, or a clip of
 T=8 frames): parameter count, FLOPs per forward pass (torch's own
 FlopCounterMode, which counts matrix multiplies and convolutions), and
 single-thread CPU latency at batch size 1, median and 90th percentile of 50
-timed passes after 10 warm-up passes.  Measured on this machine only.
+timed passes after 10 warm-up passes.  Latencies depend on the machine;
+the paper's were measured on the workstation described in the README.
 
     python bench_cost.py
 """

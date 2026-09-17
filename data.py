@@ -15,7 +15,7 @@ Three sources:
 
 For (3) the sequence axis is *spatial*, not temporal: the model reads the
 image as a sequence of horizontal strips.  This is the standard
-sequential-image protocol and a legitimate test of multi-timescale
+sequential-image protocol and a valid test of multi-timescale
 integration, but it is not video.  Feeding single frames through an LSTM
 with T = 1 would make the entire recurrent apparatus inert.
 """

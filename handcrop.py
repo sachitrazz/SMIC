@@ -1,28 +1,24 @@
 """
 handcrop.py -- crop the signing hand(s) out of each frame.
 
-Motivation
-----------
-The CSL clips are upper-body shots: the signer occupies most of the frame
-and the hand is a small fraction of the pixels.  A classifier trained on
-the full frame spends its capacity on the person, the clothing and the
-wall, and can trivially learn signer identity instead of sign identity.
-Cropping to the hand removes that shortcut and is what the supervisor
-asked for.
+The CSL clips are upper-body shots in which the hand is a small fraction of
+the pixels.  A classifier trained on the full frame can learn signer identity,
+clothing or background instead of the sign, so every frame is cropped to the
+signing hand before it is encoded.
 
 Two detectors, in order of preference:
 
-  1. MediaPipe HandLandmarker (models/hand_landmarker.task).  Accurate,
-     gives 21 landmarks per hand, handles two hands.
+  1. MediaPipe HandLandmarker (models/hand_landmarker.task): 21 landmarks per
+     hand, handles two hands.
   2. A skin-and-motion fallback, used when the model file is absent or the
-     detector finds nothing.  Skin is segmented in YCrCb, which is far more
-     illumination-robust than RGB thresholds; for video clips, the
-     per-frame difference from the clip median isolates the moving hand
-     from the (mostly static) face and torso.
+     detector finds nothing.  Skin is segmented in YCrCb, which is more robust
+     to illumination than RGB thresholds; for clips, the per-frame difference
+     from the clip median isolates the moving hand from the static face and
+     torso.
 
-The fallback matters: hand detectors fail on motion blur, which is exactly
-when the hand is moving fastest, and silently dropping those frames would
-bias the data toward held poses.
+The fallback matters because hand detectors fail on motion blur, which occurs
+when the hand moves fastest; dropping those frames would bias the data toward
+held poses.
 """
 
 import os

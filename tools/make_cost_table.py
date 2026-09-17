@@ -1,7 +1,7 @@
 r"""
 make_cost_table.py -- tables/cost.tex from results/bench_cost.json.
 
-Measured on this machine only: parameters, FLOPs per forward pass, and
+Measured on the workstation described in the README: parameters, FLOPs per forward pass, and
 single-thread CPU latency at batch 1.  No GPU number is invented.
 """
 

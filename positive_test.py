@@ -1,26 +1,24 @@
 """
-positive_test.py -- two theory-directed interventions, tested head to head.
+positive_test.py -- two interventions suggested by Proposition 2.
 
-The band-tiling mechanism failed.  The diagnosis that produced it did not:
-Proposition 2 says the referenced STLAT model collapses *because* its two streams
-share their input projections, and the collapse measurement confirmed it.
-That points at two minimal interventions, neither of which removes capacity
-the way hard tiling does.
+Proposition 2 attributes the symmetry of the referenced STLAT model to its
+two streams sharing their input projections.  This script tests two small
+interventions that follow from that, neither of which removes capacity the
+way hard band tiling does.
 
-Intervention A -- un-share the input projections (Proposition 2's own fix).
+Intervention A -- separate the input projections.
     `original` applies the same W_xg/W_xi/W_xf to both the C and M updates,
-    which places the input pathway in the symmetric eigenspace exactly.
+    which places the input pathway in the symmetric subspace.
     `original_unshared` gives the M stream its own.  Same equations, one
     structural change.
 
-Intervention B -- soft timescale diversity at initialisation.
-    Hard tiling supplies diversity by *constraining* each unit to a band.
-    Spreading the initial forget biases log-uniformly over [tau_min,
-    tau_max] supplies the same diversity while leaving every gate free to
-    move.  Diversity without constraint.
+Intervention B -- timescale diversity at initialisation.
+    Hard tiling constrains each unit to a band.  Spreading the initial forget
+    biases log-uniformly over [tau_min, tau_max] gives the same diversity at
+    the start of training while leaving every gate free to move.
 
-Run at tau_s=2, tau_l=16 -- the condition on which every variant
-separated most sharply.
+Run at tau_s=2, tau_l=16, the condition on which the variants separate most
+clearly.
 """
 
 import json

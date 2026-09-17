@@ -30,40 +30,75 @@ configurations of the referenced STLAT model.
   model on every corpus, for example 0.848 against 0.747 for the referenced
   STLAT model on ASL-IEEE (p = 3.1e-5).
 
+## Colab notebook
+
+`SMIC.ipynb` reproduces the main benchmark (Table 1 of the paper) end to end on
+a Colab GPU: data and lookup baseline, the five models, contrastive pretraining,
+training over the five shared seeds, the results tables with paired t-tests, a
+side-by-side comparison with the paper's numbers, training curves, and the
+proposition checks and unit tests. It expects the prepared arrays described
+under *Data* in `MyDrive/SMIC/data`. A full run takes about an hour on a T4.
+GPU kernels are not bit-deterministic by default, so accuracies on other
+hardware differ slightly from the paper's; the notebook prints both.
+
 ## Quick check, no data needed
 
-The corpora are not redistributed, so the test suite checks what can be checked
-without them: the Appendix propositions verify numerically, the referenced
-STLAT model builds and runs, seeding is reproducible, and the corpus paths are
-configurable.
-
-The quickest route is the Colab notebook `SMIC.ipynb`, which clones the repo,
-runs the tests and the proposition checks, and rebuilds the paper's figures
-from the committed results. Locally:
+The test suite checks what can be checked without the corpora: the Appendix
+propositions verify numerically, the referenced STLAT model builds and runs,
+seeding is reproducible, and the corpus paths are configurable.
 
 ```
 python -m unittest discover -s tests -v
+python theory.py
 ```
 
-It runs in under a minute on a CPU.
+Both run in under a minute on a CPU.
 
 ## Data
 
 No data is included. ISL-IEEE (doi:10.21227/796w-a432) and ASL-IEEE
 (doi:10.21227/4dz0-xv55) are distributed on IEEE DataPort; the CSL corpus is
-available from its authors. Set the corpus paths at the top of `prepare_new.py`
-and `prepare_csl_signer.py`, or through the environment variables below.
-Prepared arrays are written to `../prepared`.
+available from its authors. The preparation scripts read the raw corpora from
+`$SMIC_DATA` (default `../new`), with the folders `ISL_DATA_IEEE_TRAIN`,
+`ISL_DATA_IEEE_TEST`, `ASL_DATA_IEEE_TRAIN`, `ASL_DATA_IEEE_TEST`, `CSL_Train`
+and `CSL_Test`, and write prepared arrays to `$SMIC_PREPARED` (default
+`../prepared`).
+
+The benchmark and the notebook use four prepared files:
+
+| File | Content |
+|---|---|
+| `isl_grouped.npz` | ISL-IEEE, 35 classes, group-disjoint split |
+| `asl_grouped.npz` | ASL-IEEE, 24 classes, group-disjoint split |
+| `csl_signer.npz` | CSL, 97 classes, 8 sign frames per clip, signer-disjoint |
+| `csl_pool.npz` | unlabelled frames of CSL signs outside the evaluation set |
 
 ## Configuration
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `ISL_ROOT` | `../data/ISL` | ISL-IEEE corpus location |
-| `CSL_TRAIN` | the authors' local export folder | CSL training clips |
-| `CSL_TEST` | the authors' local export folder | CSL test clips |
+| `SMIC_DATA` | `../new` | raw corpora, read by the preparation scripts |
+| `SMIC_PREPARED` | `../prepared` | prepared arrays and cached encoders |
+| `ISL_ROOT` | `../data/ISL` | ISL images for `train.py` (controlled-task scripts) |
+| `CSL_TRAIN`, `CSL_TEST` | a `gesture_type_*` frame export | CSL frame folders for `train.py` |
+| `SMIC_THREADS` | up to 14 | CPU threads for the pretraining scripts |
 | `SMIC_DETERMINISTIC` | unset | set to `1` for bit-identical GPU runs (see below) |
 | `BENCH_EPOCHS`, `BENCH_TAG`, `BENCH_MODELS` | see `bench.py` | benchmark variants used in the paper |
+
+## Repository layout
+
+| Paper | Scripts | Results |
+|---|---|---|
+| Results 2.1, Figure 1, Supplementary Tables S4 to S6: split-integrity audit | `dupgroups.py`, `nn_leak_test.py`, `threshold_sweep.py`, `protocol_test.py`, `regroup_split.py` | `nn_leak_test.json`, `threshold_sweep.json`, `protocol_test.json` |
+| Results 2.2 and 2.3, Figures 2 and 3, Supplementary Tables S2 and S3: collapse and the three repairs | `model.py`, `spectral.py`, `losses.py`, `cascade_test.py`, `positive_test.py`, `asfg_test.py`, `experiments.py` | `collapse_final.json`, `cascade_test.json`, `asfg_test.json`, `ratio_synthetic.json`, `diagnose.json` |
+| Results 2.4, Table 1, Figures 4 and 5, Supplementary Tables S1 and S7: benchmark | `bench.py`, `csl_oneshot.py`, `bench_cost.py`, `pretrain_finetune.py`, `pretrain_source_control.py` | `bench_*.json`, `csl_oneshot.json`, `bench_cost.json` |
+| Results 2.5, Table 2: comparison with published models | `tools/make_literature_table.py` | `bench_*.json`, `csl_oneshot.json` |
+| Appendix: Propositions 1 to 3 | `theory.py` | printed checks |
+| Methods 4.6: data preparation | `prepare_new.py`, `prepare_csl_signer.py`, `handcrop.py`, `data.py`, `augment.py` | prepared arrays (not included) |
+| Tables and figures | `tools/`, `figures/` | written to `out/` and `figures/` |
+
+`collapse_reg.py`, `contrastive.py` and `train.py` support additional
+experiments on the controlled task that are not reported in the paper.
 
 ## Run order
 

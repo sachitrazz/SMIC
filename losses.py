@@ -2,11 +2,10 @@
 losses.py -- the spectral decorrelation objective and representation
 diagnostics.
 
-Proposition 2 says the symmetric readout makes stream collapse a
-critical point.  Band disjointness removes the *retention* degeneracy,
-but two bands could still carry the same information at different
-timescales.  The decorrelation penalty targets the remaining redundancy
-directly.
+Proposition 2 shows that the symmetric readout makes the collapsed state an
+invariant set of training.  Band disjointness removes the *retention*
+degeneracy, but two bands could still carry the same information at different
+timescales.  The decorrelation penalty targets that remaining redundancy.
 
 For band states M^(1) .. M^(K), each (B*T, d), let Z^(k) be M^(k)
 standardised over the batch-time axis.  Define the cross-band coherence
@@ -14,9 +13,9 @@ standardised over the batch-time axis.  Define the cross-band coherence
     L_dec = (1 / (K(K-1)/2)) * sum_{j<k} || Z^(j)^T Z^(k) / N ||_F^2 / d
 
 This is the mean squared cross-correlation between units of different
-bands.  It is zero exactly when the bands are mutually uncorrelated and
-one when they are identical, so it doubles as an interpretable collapse
-metric -- the number reported for the referenced STLAT model.
+bands.  It is zero exactly when the bands are mutually uncorrelated and one
+when they are identical, so it also serves as the collapse statistic reported
+for the referenced STLAT model.
 
 Effective rank
 --------------

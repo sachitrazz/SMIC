@@ -1,20 +1,20 @@
 """
-cascade_test.py -- does removing the symmetry topologically work?
+cascade_test.py -- removing the exchange symmetry by changing the topology.
 
-Three repairs for the collapse of Proposition 2, tested head to head:
+Two repairs for the collapse described by Proposition 2, compared on the same
+seeds:
 
-  unshared   separate W_x per stream.  Breaks the symmetry of the
-             INITIALISATION; the critical set remains in the landscape.
+  unshared   separate W_x per stream.  The initialisation is no longer
+             symmetric, but the invariant set still exists in the landscape.
   cascade    M is driven by C_t rather than X_t.  The two streams occupy
-             different positions in the graph, so the involution is not
-             expressible and the critical set is EMPTY.  No capacity is
-             removed -- every gate keeps full freedom.
-  (band tiling, already tested and rejected, is not repeated here.)
+             different positions in the computation graph, so the exchange
+             is not expressible and the invariant set is empty.  No capacity
+             is removed: every gate keeps full freedom.
 
-Run on both datasets, because the earlier lesson was that these two
-regimes disagree: the synthetic task genuinely requires two timescales,
-the isolated-sign images do not.  A repair that helps only on the former
-tells us something different from one that helps on both.
+Band tiling, the third repair, is run by positive_test.py and asfg_test.py.
+
+Both the synthetic two-cue task and ISL-IEEE are supported, because the first
+requires two timescales by construction and the second does not.
 
     python cascade_test.py synthetic
     python cascade_test.py isl

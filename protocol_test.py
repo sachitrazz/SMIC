@@ -1,16 +1,14 @@
 """
 protocol_test.py -- how much of a reported accuracy is the split?
 
-Three evaluation protocols over the SAME images, the SAME model and the
-SAME schedule.  Only the train/validation partition changes.
+Three evaluation protocols over the same images, the same model and the same
+schedule.  Only the train/validation partition changes.
 
   A  supplied     the _TRAIN / _TEST folders as distributed
   B  deduplicated MD5-unique images, stratified random image split
   C  group-disjoint near-duplicate groups kept intact across the split
 
-A is what a paper reproduces if it trusts the distribution.  B is what a
-careful author does.  C is the only one of the three in which a validation
-image has no near-copy in training.
+Only in C does no validation image have a near-copy in training.
 
 Stage 0 builds the three index sets over one cropped array so that nothing
 but the partition differs.
@@ -27,8 +25,8 @@ import time
 
 import numpy as np
 
-NEW = os.path.join("..", "new")
-PREP = os.path.join("..", "prepared")
+NEW = os.environ.get("SMIC_DATA", os.path.join("..", "new"))
+PREP = os.environ.get("SMIC_PREPARED", os.path.join("..", "prepared"))
 CACHE = os.path.join(PREP, "isl_protocols.npz")
 IMG = 96
 EXTS = (".jpg", ".jpeg", ".png", ".bmp")

@@ -1,5 +1,5 @@
 """
-make_theory_figure.py -- Figure 4: what the controlled two-cue task established.
+make_theory_figure.py -- Figure 3: what the controlled two-cue task established.
 
 Three panels, every number measured, including the failures:
 
